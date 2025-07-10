@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Imagens com Cropper.js</title>
+    <!-- CSS do Cropper -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+        #image-container {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        #image-preview {
+            max-width: 100%;
+        }
+        .controls {
+            margin: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <input type="file" id="image-input" accept="image/*">
+        <button id="crop-button">Cortar e Enviar</button>
+    </div>
+    
+    <div id="image-container">
+        <img id="image-preview">
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
