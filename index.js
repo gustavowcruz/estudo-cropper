@@ -25,38 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 viewMode: 1,    // Restringe o corte à área da imagem
             });
         };
+        if(cropButton.style.display === 'none'){
+            cropButton.style.display = 'inline-block';
+        }
         reader.readAsDataURL(file);
     });
 
     // Quando clica no botão de cortar
     cropButton.addEventListener('click', function() {
-        if (!cropper) {
-            alert('Selecione uma imagem primeiro!');
-            return;
-        }
+        // Obtém a imagem cortada
+        const croppedCanvas = cropper.getCroppedCanvas();
+        const croppedImageUrl = croppedCanvas.toDataURL('image/jpeg');
+        
+        // Destrói o cropper atual
+        cropper.destroy();
+        cropper = null;
+        
+        // Atualiza a imagem com a versão cortada
+        imagePreview.src = croppedImageUrl;
 
-        // Obtém a imagem cortada como Blob
-        cropper.getCroppedCanvas().toBlob(function(blob) {
-            // Cria um FormData para enviar ao servidor
-            const formData = new FormData();
-            formData.append('cropped_image', blob, 'imagem_cortada.jpg');
-
-            // Envia via Fetch API
-            fetch('upload.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Imagem enviada com sucesso! URL: ' + data.url);
-                } else {
-                    alert('Erro: ' + data.error);
-                }
-            })
-            .catch(error => {
-                alert('Erro no upload: ' + error);
-            });
-        }, 'image/jpeg', 0.9); // Qualidade 90%
+         // Esconde o botão de cortar após o corte
+        cropButton.style.display = 'none';
     });
 });
